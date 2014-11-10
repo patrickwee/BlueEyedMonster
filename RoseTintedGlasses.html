@@ -1,0 +1,76 @@
+<!DOCTYPE HTML>
+<html>
+  <head>
+    <link href='http://fonts.googleapis.com/css?family=Raleway' rel='stylesheet' type='text/css'>
+    <style>
+      body {
+        margin: 0px;
+        padding: 0px;
+      }
+      h1{
+        padding:40px 40px 0px 80px;
+        font-family: 'Raleway', sans-serif;
+        line-height: 1px;
+      }
+      h2{
+        padding:18px 40px 0px 80px;
+        font-family: 'Raleway', sans-serif;
+        line-height: 1px;
+        color:gray;
+      }
+      h6{
+        padding:0px 40px 0px 80px;
+        font-family: 'Raleway', sans-serif;
+      }
+      p{
+        padding:40px 40px 40px 80px;
+        font-family: 'Raleway', sans-serif;
+      }
+      img{
+        padding:0px 40px 0px 70px;
+      }
+    </style>
+    <h1>The Blue Eyed Monster</h1>
+    <h6>See the world in a whole new perspective!</h1>
+  </head>
+  <body>
+    <h2>Before the Filter</h2>
+    <img src="fun.jpg"/>
+    <h2>After the Filter</h2>
+    <canvas id="myCanvas" width="784" height="290"></canvas>
+    <script>
+      function drawImage(imageObj) {
+        var canvas = document.getElementById('myCanvas');
+        var context = canvas.getContext('2d');
+        var x = 69;
+        var y = 50;
+
+        context.drawImage(imageObj, x, y);
+
+        var imageData = context.getImageData(x, y, imageObj.width, imageObj.height);
+        var data = imageData.data;
+
+        for(var i = 0; i < data.length; i += 4) {
+          // red
+          data[i] = Math.abs(100 - data[i]);
+          // green
+          data[i + 1] = Math.abs(100 - data[i + 1]);
+          // blue
+          data[i + 2] = Math.abs(100 - data[i + 2]);
+        }
+
+        // overwrite original image
+        context.putImageData(imageData, x, y);
+      }
+      
+      var imageObj = new Image();
+      imageObj.onload = function() {
+        drawImage(this);
+      };
+      imageObj.src = 'fun.jpg';
+      drawImage(imageObj);
+    </script>
+
+    <p>Developed by <a href="http://lilikha.wordpress.com">Patrick Wee</a> NYU 2017</p>
+  </body>
+</html>  
